@@ -5,11 +5,15 @@ import Loading from '../../components/Loading';
 import Title from '../../components/admin/Title';
 import BlurCircle from '../../components/BlurCircle';
 import { dateFormet } from '../../lib/dateFormat';
+import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
 
 
 const Dashboard = () => {
 
   const currency = import.meta.env.VITE_CURRENCY;
+
+  const { axios, getToken, user, image_base_url } = useAppContext();
 
   const [dashboardData, setDashboardData] = useState({
     totalBookings: 0,
@@ -28,13 +32,26 @@ const Dashboard = () => {
   ];
 
   const fetchDashboardData = async () => {
-    setDashboardData(dummyDashboardData);
-    setLoading(false);
+    try {
+      const token = await getToken();
+      const { data } = await axios.get('/api/admin/dashboard', {headers: {Authorization: `Bearer ${token}`}});
+
+      if(data.success){
+        setDashboardData(data.dashboardData);
+        setLoading(false);
+      }else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error("Error fetching dashboard data: ", error);
+    }
   }
 
   useEffect(()=>{
-    fetchDashboardData();
-  }, []);
+    if(user){
+      fetchDashboardData();
+    }
+  }, [user]);
 
 
   return !loading ? (
@@ -62,7 +79,7 @@ const Dashboard = () => {
         { dashboardData.activeShows.map((show) => (
           <div key={show._id} className='w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300'>
 
-            <img src={show.movie.poster_path} alt="" className='h-60 w-full object-cover' />
+            <img src={image_base_url + show.movie.poster_path} alt="" className='h-60 w-full object-cover' />
             <p className='font-medium p-2 truncate'>{show.movie.title}</p>
 
             <div className='flex items-center justify-between px-2'>
