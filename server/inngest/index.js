@@ -78,5 +78,6 @@ const releaseSeatsAndDeleteBooking = inngest.createFunction(
 export const functions = [
     syncUserCreation,
     syncUserDeletion,
-    syncUserUpdation
+    syncUserUpdation,
+    releaseSeatsAndDeleteBooking
 ];
