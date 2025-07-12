@@ -48,7 +48,7 @@ const ListBookings = () => {
           </thead>
           <tbody>
             {bookings.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td className='p-2 min-w-45 pl-5'>{item.user.name}</td>
                 <td className='p-2'>{item.show.movie.title}</td>
                 <td className='p-2'>{dateFormet(item.show.showDateTime)}</td>

@@ -23,7 +23,6 @@ const MyBookings = () => {
       const { data } = await axios.get('/api/user/bookings', {headers: {Authorization: `Bearer ${token}`}});
       
       if(data.success){
-        console.log(data.bookings)
         setBookings(data.bookings)
       }
     } catch (error) {
