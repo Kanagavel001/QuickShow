@@ -1,7 +1,6 @@
 import { clerkClient } from "@clerk/express";
 import Booking from "../models/Booking.js";
 import Movie from "../models/Movie.js";
-import User from "../models/User.js";
 
 
 // API Controller function to get Single User Bookings

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { assets, dummyDateTimeData, dummyShowsData } from '../assets/assets';
+import { useParams } from 'react-router-dom'
+import { assets } from '../assets/assets';
 import Loading from '../components/Loading';
 import { ArrowRightIcon, ClockIcon } from 'lucide-react'
 import isoTimeFormat from '../lib/isoTimeFormat';
@@ -15,7 +15,6 @@ const SeatLayout = () => {
   const { axios, getToken, user } = useAppContext();
 
   const { id, date } = useParams();
-  const navigate = useNavigate();
 
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
